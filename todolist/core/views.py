@@ -1,10 +1,20 @@
 from django.contrib.auth import login, logout
 from rest_framework import status, permissions
-from rest_framework.generics import CreateAPIView, GenericAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    GenericAPIView,
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+)
 from rest_framework.response import Response
 
 from .models import User
-from .serializers import CreateUserSerializer, LoginSerializer, ProfileSerializer, UpdatePasswordSerializer
+from .serializers import (
+    CreateUserSerializer,
+    LoginSerializer,
+    ProfileSerializer,
+    UpdatePasswordSerializer,
+)
 
 
 class SignupView(CreateAPIView):
