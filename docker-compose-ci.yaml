@@ -17,7 +17,7 @@ services:
       - backend_nw
 
   migrations:
-    image: uliagareeva/todolist-course-work6:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: uliagareeva/todolist-course-work6:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     depends_on:
       postgres:
         condition: service_healthy
@@ -30,7 +30,7 @@ services:
     command: python ./todolist/manage.py migrate
 
   api:
-    image: uliagareeva/todolist-course-work6:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: uliagareeva/todolist-course-work6:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     depends_on:
       postgres:
         condition: service_healthy
@@ -42,7 +42,7 @@ services:
       - backend_nw
 
   bot:
-    image: uliagareeva/todolist-course-work6:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: uliagareeva/todolist-course-work6:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     restart: always
     depends_on:
       postgres:
@@ -50,7 +50,7 @@ services:
     env_file:
       - .env_example
     environment:
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: ${POSTGRES_HOST}
     command: python ./todolist/manage.py runbot
     networks:
       - backend_nw
@@ -70,4 +70,3 @@ volumes:
 
 networks:
   backend_nw:
-    driver: bridge
