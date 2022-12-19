@@ -48,7 +48,7 @@ jobs:
           target: "todolist"
           strip_components: 1
 
-      - name: Clear before deploy
+      - name: Clear before Deploy
         if: always()
         uses: appleboy/ssh-action@master
         with:
@@ -56,6 +56,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
+            cd todolist
             docker-compose down
             docker system prune -a -f
 
