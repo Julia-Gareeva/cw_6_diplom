@@ -12,7 +12,7 @@ services:
     env_file:
       - .env_locally
     environment:
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: todolist-database
     command: python ./todolist/manage.py runbot
     networks:
       - backend_nw
@@ -37,8 +37,8 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U user23 -d todolist-database" ]
       interval: 5s
-      timeout: 3s
-      retries: 3
+      timeout: 5s
+      retries: 5
     ports:
       - "5432:5432"
     networks:
@@ -67,7 +67,7 @@ services:
         condition: service_healthy
     env_file:
       - .env_locally
-    command: python ./todolist/manage.py runbot
+    command: python ./todolist/manage.py migrate
     networks:
       - backend_nw
 
