@@ -2,15 +2,12 @@ version: '3.9'
 
 services:
   postgres:
-    image: postgres:13-alpine
+    image: postgres:13.0-alpine
     restart: always
+    env_file:
+      - .env_example
     volumes:
       - pg_data_todolist:/var/lib/postgresql/data
-      - ./.docker_env:/code/.env_example
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U user23 -d todolist-database" ]
       interval: 5s
@@ -22,18 +19,21 @@ services:
       - backend_nw
 
   migrations:
-    build: ./todolist/.
+    build:
+      context: .
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./.docker_env:/code/.env_example
-    command: python ./todolist/manage.py migrate
+    env_file:
+      - .env_example
+    command: >
+    sh -c "python ./todolist/manage.py migrate"
     networks:
       - backend_nw
 
   api:
-    build: ./todolist/.
+    build:
+      context: .
     depends_on:
       postgres:
         condition: service_healthy
@@ -41,8 +41,8 @@ services:
         condition: service_completed_successfully
     ports:
       - "8000:8000"
-    volumes:
-      - ./.docker_env:/code/.env_example
+    env_file:
+      - .env_example
     networks:
       - backend_nw
 
@@ -54,11 +54,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./.docker_env:/code/.env_example
+    env_file:
+      - .env_example
     environment:
       POSTGRES_HOST: localhost
-    command: python ./todolist/manage.py runbot
+    command: >
+    sh -c "python ./todolist/manage.py runbot"
     networks:
       - backend_nw
 
