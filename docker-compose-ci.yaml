@@ -25,8 +25,7 @@ services:
       - ./.env_example:/code/.env_example
     networks:
       - backend_nw
-    command: >
-    sh -c "python ./todolist/manage.py migrate"
+    command: python ./todolist/manage.py migrate
 
   api:
     image: uliagareeva/todolist-course-work6:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
@@ -50,8 +49,7 @@ services:
       - .env_example
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
-    command: >
-    sh -c "python ./todolist/manage.py runbot"
+    command: python ./todolist/manage.py runbot
     networks:
       - backend_nw
 

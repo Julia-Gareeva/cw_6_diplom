@@ -13,8 +13,7 @@ services:
       - .env_locally
     environment:
       POSTGRES_HOST: postgres
-    command: >
-      sh -c "python ./todolist/manage.py runbot"
+    command: python ./todolist/manage.py runbot
     networks:
       - backend_nw
 
@@ -68,8 +67,7 @@ services:
         condition: service_healthy
     env_file:
       - .env_locally
-    command: >
-      sh -c "python ./todolist/manage.py runbot"
+    command: python ./todolist/manage.py runbot
     networks:
       - backend_nw
 

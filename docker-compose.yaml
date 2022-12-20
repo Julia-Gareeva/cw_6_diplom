@@ -26,8 +26,7 @@ services:
         condition: service_healthy
     env_file:
       - .env_example
-    command: >
-    sh -c "python ./todolist/manage.py migrate"
+    command: python ./todolist/manage.py migrate
     networks:
       - backend_nw
 
@@ -58,8 +57,7 @@ services:
       - .env_example
     environment:
       POSTGRES_HOST: localhost
-    command: >
-    sh -c "python ./todolist/manage.py runbot"
+    command: python ./todolist/manage.py runbot
     networks:
       - backend_nw
 
