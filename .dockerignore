@@ -2,7 +2,5 @@
 .env_example
 /venv
 /deploy
-.dockerignore
 .gitignore
 Dockerfile
-requirements.dev.txt
